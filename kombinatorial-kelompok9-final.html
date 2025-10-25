@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KOMBINATORIAL - Kelompok 9</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg') center/cover no-repeat;
+      filter: blur(2px) brightness(0.6);
+      z-index: -2;
+    }
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.4);
+      z-index: -1;
+    }
+
+    :root {
+      --card-bg: rgba(30, 28, 55, 0.85);
+      --text-primary: #ffffff;
+      --accent: #bb86fc;
+      --border: rgba(255,255,255,0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      color: var(--text-primary);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      padding: 0;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .hamburger-menu {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1001;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .hamburger-line {
+      width: 30px;
+      height: 3px;
+      background: var(--text-primary);
+      border-radius: 2px;
+    }
+
+    .menu-dropdown {
+      position: fixed;
+      top: 70px;
+      left: 20px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 0;
+      min-width: 220px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .menu-item {
+      padding: 12px 20px;
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: 0.2s;
+    }
+    .menu-item:hover {
+      background: rgba(187, 134, 252, 0.15);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .login-container,
+    .view {
+      position: relative;
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 50px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.45);
+      border: 1px solid var(--border);
+      display: none;
+    }
+
+    .login-container {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #a1c4fd, #c2e9fb, #d4fc79);
+      color: #1a1a2e;
+    }
+
+    .view {
+      max-width: 1200px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--border);
+    }
+    .header-bar h2 {
+      font-size: 26px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bio-section {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px;
+      margin-bottom: 35px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .bio-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff9a9e, #a1c4fd);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 42px;
+      color: #000;
+    }
+
+    .materials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+    .material-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 30px 20px;
+      text-align: center;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    .material-card:hover {
+      transform: translateY(-6px);
+    }
+    .material-card i {
+      font-size: 2.6rem;
+      margin-bottom: 18px;
+      color: var(--accent);
+    }
+    .material-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    #materi-content {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      padding: 40px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    #materi-content h3 {
+      color: var(--accent);
+      margin: 24px 0 16px;
+      font-size: 1.5rem;
+    }
+    #materi-content p, #materi-content li {
+      margin-bottom: 14px;
+    }
+    #materi-content ul, #materi-content ol {
+      padding-left: 30px;
+      margin: 16px 0;
+    }
+
+    .btn-contoh {
+      background: rgba(255, 154, 158, 0.3);
+      color: white;
+      border: 1px solid #ff9a9e;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 15px 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-contoh:hover {
+      background: rgba(255, 154, 158, 0.5);
+    }
+
+    .contoh-box {
+      background: rgba(40, 40, 70, 0.6);
+      border-left: 4px solid var(--accent);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 0 12px 12px 0;
+      display: none;
+    }
+    .contoh-box.show {
+      display: block;
+      animation: fadeIn 0.4s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .input-group {
+      margin: 16px 0;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .switch-form {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .switch-form a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--text-secondary);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      color: white;
+    }
+    th, td {
+      border: 1px solid #555;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hamburger Menu -->
+  <div class="hamburger-menu" id="hamburger">
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+    <div class="hamburger-line"></div>
+  </div>
+
+  <div class="menu-dropdown" id="menu-dropdown">
+    <a href="#" class="menu-item" id="menu-profile"><i class="fas fa-users"></i> Profil Kelompok</a>
+    <a href="#" class="menu-item" id="menu-dashboard"><i class="fas fa-home"></i> Dashboard</a>
+    <a href="#" class="menu-item" id="menu-logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+
+  <div class="container">
+    <!-- Login & Signup -->
+    <div id="login-view" class="login-container">
+      <h2><i class="fas fa-book-open"></i> <span id="form-title">Login</span></h2>
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username">
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password">
+      </div>
+      <button class="btn" id="login-btn">Login</button>
+      <button class="btn" id="signup-btn" style="display:none; background:#a1c4fd; color:#000;">Buat Akun</button>
+      <div class="switch-form">
+        Belum punya akun? <a id="switch-to-signup">Daftar di sini</a> | Sudah punya akun? <a id="switch-to-login">Login</a>
+      </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard-view" class="view">
+      <div class="header-bar">
+        <h2><i class="fas fa-calculator"></i> KOMBINATORIAL - Kelompok 9</h2>
+      </div>
+      <div class="bio-section">
+        <div class="bio-avatar">📚</div>
+        <p><strong>anggota kelompok:</strong></p>
+        <p>Reno Arrochim — 251240001594</p>
+        <p>Zaky Nabil Al Fikri — 251240001601</p>
+        <p>Whendra Mariyoko Putra — 251240001671</p>
+        <p>Muhammad Amirul Fatih — 251240001670</p>
+        <p>Ahmad Bassori — 251240001704</p>
+        <p>Hikmal Ikhwanu Salam — 251240001618</p>
+        <p style="margin-top:15px; font-style:italic;">AYO KITA MULAI!</p>
+        <p style="font-style:italic;">Trigonometri membuka jendela baru dunia!</p>
+      </div>
+      <div class="materials-grid" id="materials-grid"></div>
+      <div class="footer">&copy; 2025 Kelompok 9 – KOMBINATORIAL</div>
+    </div>
+
+    <!-- Materi -->
+    <div id="materi-view" class="view">
+      <div class="header-bar">
+        <button class="btn" id="back-to-dashboard" style="width:auto; padding:8px 16px; background:#bb86fc; color:#000;">
+          <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2 id="materi-title">Judul Materi</h2>
+        <div></div>
+      </div>
+      <div id="materi-content"></div>
+    </div>
+
+    <!-- Profil -->
+    <div id="profile-view" class="view">
+      <div class="header-bar">
+        <button class="btn" id="back-to-dash-from-profile" style="width:auto; padding:8px 16px; background:#bb86fc; color:#000;">
+          <i class="fas fa-arrow-left"></i> Kembali
+        </button>
+        <h2><i class="fas fa-user-friends"></i> Profil Kelompok 9</h2>
+        <div></div>
+      </div>
+      <div class="bio-section">
+        <div class="bio-avatar">👥</div>
+        <p><strong>anggota kelompok:</strong></p>
+        <p>Reno Arrochim — 251240001594</p>
+        <p>Zaky Nabil Al Fikri — 251240001601</p>
+        <p>Whendra Mariyoko Putra — 251240001671</p>
+        <p>Muhammad Amirul Fatih — 251240001670</p>
+        <p>Ahmad Bassori — 251240001704</p>
+        <p>Hikmal Ikhwanu Salam — 251240001618</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const materialsData = {
+      "definisi": {
+        title: "DEFINISI KOMBINATORIAL",
+        icon: "fa-book",
+        content: `<p>Kombinatorial adalah cabang matematika untuk menghitung (counting) jumlah penyusunan objek-objek tanpa harus mengenumerasi semua kemungkinan susunannya.</p>`
+      },
+      "kaidah-dasar": {
+        title: "KAIDAH DASAR MENGHITUNG",
+        icon: "fa-calculator",
+        content: `
+          <p><strong>Langkah 1</strong></p>
+          <p><strong>Kaidah perkalian (rule of product)</strong><br>Percobaan 1: p hasil<br>Percobaan 2: q hasil<br>Percobaan 1 dan percobaan 2: p x q hasil</p>
+          <p><strong>Kaidah penjumlahan (rule of sum)</strong><br>Percobaan 1: p hasil<br>Percobaan 2: q hasil<br>Percobaan 1 atau percobaan 2: p + q hasil</p>
+          <button class="btn-contoh" onclick="toggleContoh('c1')"><i class="fas fa-book-open"></i> contoh 1</button>
+          <div id="c1" class="contoh-box">
+            <p><strong>Contoh 1.</strong> Ketua angkatan IF 2019 hanya 1 orang (pria atau wanita, tidak bias gender). Jumlah pria 1F* 2019 = 65 orang dan jumlah wanita = 15 orang. Berapa banyak cara memilih ketua angkatan?</p>
+            <p><strong>Penyelesaian:</strong> 65 + 15 = 80 cara.</p>
+          </div>
+          <button class="btn-contoh" onclick="toggleContoh('c2')"><i class="fas fa-book-open"></i> contoh 2</button>
+          <div id="c2" class="contoh-box">
+            <p><strong>Contoh 2.</strong> Dua orang perwakilan IF2019 mendatangai Bapak Rektor untuk protes kenaikan UKT. Wakil yang dipilih 1 orang pria dan 1 orang wanita. Berapa banyak cara memilih 2 orang wakil tersebut?</p>
+            <p><strong>Penyelesaian:</strong> 65 x 15 = 975 cara.</p>
+          </div>
+        `
+      },
+      "perluasan": {
+        title: "PERLUASAN KAIDAH DASAR MENGHITUNG",
+        icon: "fa-expand",
+        content: `
+          <p>Misalkan ada n percobaan, masing-masing dengan p hasil</p>
+          <p>1. Kaidah perkalian (rule of product)<br>p₁ x p₂ x ... x pₙ hasil</p>
+          <p>2. Kaidah penjumlahan (rule of sum)<br>p₁ + p₂ + ... + pₙ hasil</p>
+          <button class="btn-contoh" onclick="toggleContoh('c3')"><i class="fas fa-book-open"></i> contoh 3</button>
+          <div id="c3" class="contoh-box">
+            <p>Bit biner hanya 0 dan 1. Berapa banyak string biner yang dapat dibentuk jika:<br>(a) panjang string 5 bit<br>(b) panjang string 8 bit (= 1 byte)</p>
+            <p><strong>Penyelesaian:</strong><br>(a) 2 × 2 × 2 × 2 × 2 = 2⁵ = 32 buah<br>(b) 2⁸ = 256 buah</p>
+          </div>
+          <button class="btn-contoh" onclick="toggleContoh('c4')"><i class="fas fa-book-open"></i> contoh 4</button>
+          <div id="c4" class="contoh-box">
+            <p>Berapa banyak bilangan ganj il antara 1000 dan 9999 (termasuk 1000 dan 9999 itu sendiri) yang<br>(a) semua angkanya berbeda<br>(b) boleh ada angka yang berulang.</p>
+            <p><strong>Penyelesaian:</strong><br>(a) posisi satuan: 5 kemungkinan angka (1, 3, 5, 7, 9)<br>posisi ribuan: 8 kemungkinan angka<br>posisi ratusan: 8 kemungkinan angka<br>posisi puluhan: 7 kemungkinan angka<br>Banyak bilangan ganj il seluruhnya = (5)(8)(8)(7) = 2240 buah.</p>
+            <p>(b) posisi satuan: 5 kemungkinan angka (yaitu 1, 3, 5, 7 dan 9);<br>posisi ribuan: 9 kemungkinan angka (1 sampai 9)<br>posisi ratusan: 10 kemungkinan angka (0 sampai 9)<br>posisi puluhan: 10 kemungkinan angka (0 sampai 9)<br>Banyak bilangan ganj il seluruhnya = (5)(9)(10)(10) = 4500</p>
+          </div>
+        `
+      },
+      "inklusi-eksklusi": {
+        title: "PRINSIP INKLUSI-EKSKLUSI",
+        icon: "fa-project-diagram",
+        content: `
+          <button class="btn-contoh" onclick="toggleContoh('pie1')"><i class="fas fa-book-open"></i> CONTOH</button>
+          <div id="pie1" class="contoh-box">
+            <p><strong>Soal:</strong> Dari 100 siswa:<br>- 60 suka kopi (K)<br>- 50 suka teh (T)<br>- 40 suka susu (S)<br>- 30 suka kopi dan teh<br>- 20 suka kopi dan susu<br>- 15 suka teh dan susu<br>- 10 suka semua (kopi, teh, susu)</p>
+            <p><strong>Pertanyaan:</strong> Berapakah siswa yang suka minimal satu jenis minuman?</p>
+            <p><strong>Penyelesaian:</strong> Gunakan rumus PIE (Principle of Inclusion-Exclusion):<br>|K ∪ T ∪ S| = |K| + |T| + |S| − (|K ∩ T| + |K ∩ S| + |T ∩ S|) + |K ∩ T ∩ S|<br>Masukkan angkanya:<br>|K ∪ T ∪ S| = 60 + 50 + 40 − (30 + 20 + 15) + 10<br>|K ∪ T ∪ S| = 150 − 65 + 10 = 95</p>
+            <p>■ Jadi 95 siswa suka minimal satu jenis minuman. Berarti 5 siswa tidak suka apa pun</p>
+          </div>
+          <button class="btn-contoh" onclick="toggleContoh('pie2')"><i class="fas fa-book-open"></i> CONTOH</button>
+          <div id="pie2" class="contoh-box">
+            <p>Setiap byte disusun oleh 8-bit. Berapa banyak jumlah byte yang dimulai dengan ‘11’ atau berakhir dengan ‘11’?</p>
+            <p><strong>Penyelesaian:</strong> Misalkan A = himpunan byte yang dimulai dengan ‘11’, B = himpunan byte yang diakhiri dengan ‘11’<br>A ∩ B = himpunan byte yang berawal dan berakhir dengan ‘11’<br>maka A ∪ B = himpunan byte yang berawal dengan ‘11’ atau berakhir dengan ‘11’<br>|A| = 2⁶ = 64, |B| = 2⁶ = 64, |A ∩ B| = 2⁴ = 16.<br>maka |A ∪ B| = |A| + |B| – |A ∩ B| = 2⁶ + 2⁶ – 16 = 64 + 64 – 16 = 112</p>
+          </div>
+        `
+      },
+      "permutasi": {
+        title: "PERMUTASI",
+        icon: "fa-random",
+        content: `
+          <p>Definisi: Permutasi adalah jumlah urutan berbeda dari pengaturan objek-objek.</p>
+          <p>Permutasi merupakan bentuk khusus aplikasi kaidah perkalian. Misalkan jumlah objek adalah n, maka<br>urutan pertama dipilih dari n objek,<br>urutan kedua dipilih dari n – 1 objek,<br>urutan ketiga dipilih dari n – 2 objek,<br>...<br>urutan terakhir dipilih dari 1 objek yang tersisa.</p>
+          <p>Menurut kaidah perkalian, permutasi dari n objek adalah<br>n(n – 1)(n – 2)...(2)(1) = n!</p>
+          <button class="btn-contoh" onclick="toggleContoh('perm')"><i class="fas fa-book-open"></i> PERMUTASI</button>
+          <div id="perm" class="contoh-box">
+            <table>
+              <tr><th>Kotak 1</th><th>Kotak 2</th><th>Kotak 3</th><th>Urutan</th></tr>
+              <tr><td>m</td><td>b</td><td>p</td><td>mbp</td></tr>
+              <tr><td>m</td><td>p</td><td>b</td><td>mpb</td></tr>
+              <tr><td>b</td><td>m</td><td>p</td><td>bmp</td></tr>
+              <tr><td>b</td><td>p</td><td>m</td><td>bpm</td></tr>
+              <tr><td>p</td><td>m</td><td>b</td><td>pmb</td></tr>
+              <tr><td>p</td><td>b</td><td>m</td><td>pbm</td></tr>
+            </table>
+            <p>Jumlah kemungkinan urutan berbeda dari penempatan bola ke dalam kotak adalah (3)(2)(1) = 3! = 6.</p>
+          </div>
+        `
+      },
+      "kombinasi": {
+        title: "KOMBINASI",
+        icon: "fa-object-group",
+        content: `
+          <p>Bentuk khusus dari permutasi adalah kombinasi. Jika pada permutasi urutan kemunculan diperhitungkan, maka pada kombinasi, urutan kemunculan diabaikan.</p>
+          <button class="btn-contoh" onclick="toggleContoh('komb')"><i class="fas fa-book-open"></i> CONTOH</button>
+          <div id="komb" class="contoh-box">
+            <p><strong>Contoh 9.</strong> Di antara 10 orang mahasiswa Teknik Informatika Angkatan 2002, berapa banyak cara membentuk sebuah perwakilan beranggotakan 5 orang sedemikian sehingga:<br>(a) mahasiswa bernama A selalu termasuk di dalamnya;<br>(b) mahasiswa bernama A tidak termasuk di dalamnya;<br>(c) mahasiswa bernama A selalu termasuk di dalamnya, tetapi B tidak;<br>(d) mahasiswa bernama B selalu termasuk di dalamnya, tetapi A tidak;<br>(e) mahasiswa bernama A dan B termasuk di dalamnya;<br>(f) setidaknya salah satu dari mahasiswa yang bernama A atau B termasuk di dalamny</p>
+            <p><strong>Penyelesaian:</strong><br>(a) C(9, 4) = 126 cara untuk membentuk perwakilan yang beranggotakn 5 orang sedemikian sehingga A selalu termasuk di dalamnya.<br>(b) C(9, 5) = 126 cara untuk membentuk perwakilan yang beranggotakn 5 orang sedemikian sehingga A tidak termasuk di dalamnya.<br>(c) C(8, 4) = 70 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A termasuk di dalamnya, tetapi B tidak.<br>(d) C(8, 4) = 70 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga B termasuk di dalamnya, tetapi A tidak.<br>(e) C(8, 3) = 56 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A dan B selalu termasuk di dalamnya.</p>
+          </div>
+        `
+      },
+      "informatika": {
+        title: "PENARAPAN DALAM INFORMATIKA",
+        icon: "fa-laptop-code",
+        content: `
+          <ol>
+            <li><strong>Analisis Algoritma</strong><br>Menghitung banyaknya operasi atau kemungkinan langkah (misal jumlah kombinasi password).<br>→ Berguna untuk memperkirakan kompleksitas waktu dan keamanan sistem.</li>
+            <li><strong>Optimisasi & Pencarian</strong><br>Menyelesaikan masalah seperti Travelling Salesman atau Knapsack dengan mencari kombinasi terbaik.<br>→ Dipakai di AI, logistik, dan sistem rekomendasi.</li>
+            <li><strong>Struktur Data (Graf & Pohon)</strong><br>Kombinatorika menentukan jumlah kemungkinan hubungan antar node atau bentuk pohon biner.<br>→ Digunakan dalam compiler, path finding, dan network analysis.</li>
+            <li><strong>Kriptografi</strong><br>Menentukan banyaknya kunci dan kekuatan sistem enkripsi.<br>→ Semakin banyak kombinasi, semakin sulit diretas.</li>
+            <li><strong>Kompresi & Pengkodean Data</strong><br>Menentukan cara menyusun bit agar efisien tanpa redundansi.<br>→ Contoh: Huffman coding.</li>
+            <li><strong>Probabilitas dalam AI</strong><br>Menghitung kemungkinan hasil dalam model prediksi dan machine learning.</li>
+          </ol>
+          <p>Kombinatorika membantu informatika dalam menghitung, menstruktur, dan mengoptimalkan kemungkinan — dari keamanan, pencarian data, sampai kecerdasan buatan.</p>
+          
+          <button class="btn-contoh" onclick="toggleContoh('contoh-password')">
+            <i class="fas fa-book-open"></i> PEMBUATAN PASSWORD
+          </button>
+          <div id="contoh-password" class="contoh-box">
+            <p><strong>Syarat pembuatan password:</strong> terdiri dari 8 karakter<br>huruf kapital<br>huruf kecil<br>angka</p>
+            <p>________________<br>huruf kapital : 26<br>huruf kecil : 26<br>angka : 10</p>
+            <p>62+</p>
+            <p>62.62.62.62.62.62.62.62=62 =<br>198.340.105.584.896</p>
+            <p>8</p>
+            <p>Ada 198.340.105.584.896 cara untuk membuat password</p>
+          </div>
+        `
+      }
+    };
+
+    function toggleContoh(id) {
+      document.getElementById(id).classList.toggle('show');
+    }
+
+    function showView(id) {
+      document.getElementById('login-view').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('materi-view').style.display = 'none';
+      document.getElementById('profile-view').style.display = 'none';
+      document.getElementById(id).style.display = 'block';
+      document.getElementById('menu-dropdown').style.display = 'none';
+    }
+
+    function renderMaterials() {
+      const grid = document.getElementById('materials-grid');
+      grid.innerHTML = '';
+      Object.entries(materialsData).forEach(([key, m]) => {
+        const card = document.createElement('div');
+        card.className = 'material-card';
+        card.innerHTML = `<i class="fas ${m.icon}"></i><h3>${m.title}</h3>`;
+        card.onclick = () => {
+          document.getElementById('materi-title').textContent = m.title;
+          document.getElementById('materi-content').innerHTML = m.content;
+          showView('materi-view');
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', e => {
+      e.stopPropagation();
+      const menu = document.getElementById('menu-dropdown');
+      menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+    });
+    document.addEventListener('click', e => {
+      const menu = document.getElementById('menu-dropdown');
+      const ham = document.getElementById('hamburger');
+      if (!ham.contains(e.target) && !menu.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+
+    // Menu
+    document.getElementById('menu-dashboard').addEventListener('click', e => { e.preventDefault(); showView('dashboard-view'); });
+    document.getElementById('menu-profile').addEventListener('click', e => { e.preventDefault(); showView('profile-view'); });
+    document.getElementById('menu-logout').addEventListener('click', e => { e.preventDefault(); showView('login-view'); });
+
+    // Back
+    document.getElementById('back-to-dashboard').addEventListener('click', () => showView('dashboard-view'));
+    document.getElementById('back-to-dash-from-profile').addEventListener('click', () => showView('dashboard-view'));
+
+    // Form toggle
+    document.getElementById('switch-to-signup').addEventListener('click', () => {
+      document.getElementById('form-title').textContent = 'Buat Akun';
+      document.getElementById('login-btn').style.display = 'none';
+      document.getElementById('signup-btn').style.display = 'block';
+    });
+    document.getElementById('switch-to-login').addEventListener('click', () => {
+      document.getElementById('form-title').textContent = 'Login';
+      document.getElementById('login-btn').style.display = 'block';
+      document.getElementById('signup-btn').style.display = 'none';
+    });
+
+    // Login
+    document.getElementById('login-btn').addEventListener('click', () => {
+      const u = document.getElementById('username').value.trim().toLowerCase();
+      const p = document.getElementById('password').value;
+      if ((u === "akhmad bashori" || u === "ahmad bassori") && p === "basreng06") {
+        showView('dashboard-view');
+        renderMaterials();
+      } else {
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const user = users.find(acc => acc.username === u && acc.password === p);
+        if (user) {
+          showView('dashboard-view');
+          renderMaterials();
+        } else {
+          alert('Username atau password salah!');
+        }
+      }
+    });
+
+    // Signup
+    document.getElementById('signup-btn').addEventListener('click', () => {
+      const u = document.getElementById('username').value.trim().toLowerCase();
+      const p = document.getElementById('password').value;
+      if (!u || !p) return alert('Username dan password tidak boleh kosong!');
+      if (u.length < 3) return alert('Username minimal 3 karakter!');
+      if (p.length < 6) return alert('Password minimal 6 karakter!');
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      if (users.some(user => user.username === u)) return alert('Username sudah digunakan!');
+      users.push({ username: u, password: p });
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('Akun berhasil dibuat! Silakan login.');
+      document.getElementById('switch-to-login').click();
+    });
+
+    showView('login-view');
+  </script>
+</body>
+</html>
