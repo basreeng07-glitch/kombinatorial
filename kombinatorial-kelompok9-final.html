@@ -411,12 +411,12 @@
           <p><strong>Kaidah penjumlahan (rule of sum)</strong><br>Percobaan 1: p hasil<br>Percobaan 2: q hasil<br>Percobaan 1 atau percobaan 2: p + q hasil</p>
           <button class="btn-contoh" onclick="toggleContoh('c1')"><i class="fas fa-book-open"></i> contoh 1</button>
           <div id="c1" class="contoh-box">
-            <p><strong>Contoh 1.</strong> Ketua angkatan IF 2019 hanya 1 orang (pria atau wanita, tidak bias gender). Jumlah pria 1F* 2019 = 65 orang dan jumlah wanita = 15 orang. Berapa banyak cara memilih ketua angkatan?</p>
+            <p><strong>Contoh 1.</strong> Ketua angkatan IF 2019 hanya 1 orang (pria atau wanita, tidak bias gender). Jumlah pria IF 2019 = 65 orang dan jumlah wanita = 15 orang. Berapa banyak cara memilih ketua angkatan?</p>
             <p><strong>Penyelesaian:</strong> 65 + 15 = 80 cara.</p>
           </div>
           <button class="btn-contoh" onclick="toggleContoh('c2')"><i class="fas fa-book-open"></i> contoh 2</button>
           <div id="c2" class="contoh-box">
-            <p><strong>Contoh 2.</strong> Dua orang perwakilan IF2019 mendatangai Bapak Rektor untuk protes kenaikan UKT. Wakil yang dipilih 1 orang pria dan 1 orang wanita. Berapa banyak cara memilih 2 orang wakil tersebut?</p>
+            <p><strong>Contoh 2.</strong> Dua orang perwakilan IF2019 mendatangi Bapak Rektor untuk protes kenaikan UKT. Wakil yang dipilih 1 orang pria dan 1 orang wanita. Berapa banyak cara memilih 2 orang wakil tersebut?</p>
             <p><strong>Penyelesaian:</strong> 65 x 15 = 975 cara.</p>
           </div>
         `
@@ -435,9 +435,9 @@
           </div>
           <button class="btn-contoh" onclick="toggleContoh('c4')"><i class="fas fa-book-open"></i> contoh 4</button>
           <div id="c4" class="contoh-box">
-            <p>Berapa banyak bilangan ganj il antara 1000 dan 9999 (termasuk 1000 dan 9999 itu sendiri) yang<br>(a) semua angkanya berbeda<br>(b) boleh ada angka yang berulang.</p>
-            <p><strong>Penyelesaian:</strong><br>(a) posisi satuan: 5 kemungkinan angka (1, 3, 5, 7, 9)<br>posisi ribuan: 8 kemungkinan angka<br>posisi ratusan: 8 kemungkinan angka<br>posisi puluhan: 7 kemungkinan angka<br>Banyak bilangan ganj il seluruhnya = (5)(8)(8)(7) = 2240 buah.</p>
-            <p>(b) posisi satuan: 5 kemungkinan angka (yaitu 1, 3, 5, 7 dan 9);<br>posisi ribuan: 9 kemungkinan angka (1 sampai 9)<br>posisi ratusan: 10 kemungkinan angka (0 sampai 9)<br>posisi puluhan: 10 kemungkinan angka (0 sampai 9)<br>Banyak bilangan ganj il seluruhnya = (5)(9)(10)(10) = 4500</p>
+            <p>Berapa banyak bilangan ganjil antara 1000 dan 9999 (termasuk 1000 dan 9999 itu sendiri) yang<br>(a) semua angkanya berbeda<br>(b) boleh ada angka yang berulang.</p>
+            <p><strong>Penyelesaian:</strong><br>(a) posisi satuan: 5 kemungkinan angka (1, 3, 5, 7, 9)<br>posisi ribuan: 8 kemungkinan angka<br>posisi ratusan: 8 kemungkinan angka<br>posisi puluhan: 7 kemungkinan angka<br>Banyak bilangan ganjil seluruhnya = (5)(8)(8)(7) = 2240 buah.</p>
+            <p>(b) posisi satuan: 5 kemungkinan angka (yaitu 1, 3, 5, 7 dan 9);<br>posisi ribuan: 9 kemungkinan angka (1 sampai 9)<br>posisi ratusan: 10 kemungkinan angka (0 sampai 9)<br>posisi puluhan: 10 kemungkinan angka (0 sampai 9)<br>Banyak bilangan ganjil seluruhnya = (5)(9)(10)(10) = 4500</p>
           </div>
         `
       },
@@ -488,13 +488,13 @@
           <p>Bentuk khusus dari permutasi adalah kombinasi. Jika pada permutasi urutan kemunculan diperhitungkan, maka pada kombinasi, urutan kemunculan diabaikan.</p>
           <button class="btn-contoh" onclick="toggleContoh('komb')"><i class="fas fa-book-open"></i> CONTOH</button>
           <div id="komb" class="contoh-box">
-            <p><strong>Contoh 9.</strong> Di antara 10 orang mahasiswa Teknik Informatika Angkatan 2002, berapa banyak cara membentuk sebuah perwakilan beranggotakan 5 orang sedemikian sehingga:<br>(a) mahasiswa bernama A selalu termasuk di dalamnya;<br>(b) mahasiswa bernama A tidak termasuk di dalamnya;<br>(c) mahasiswa bernama A selalu termasuk di dalamnya, tetapi B tidak;<br>(d) mahasiswa bernama B selalu termasuk di dalamnya, tetapi A tidak;<br>(e) mahasiswa bernama A dan B termasuk di dalamnya;<br>(f) setidaknya salah satu dari mahasiswa yang bernama A atau B termasuk di dalamny</p>
-            <p><strong>Penyelesaian:</strong><br>(a) C(9, 4) = 126 cara untuk membentuk perwakilan yang beranggotakn 5 orang sedemikian sehingga A selalu termasuk di dalamnya.<br>(b) C(9, 5) = 126 cara untuk membentuk perwakilan yang beranggotakn 5 orang sedemikian sehingga A tidak termasuk di dalamnya.<br>(c) C(8, 4) = 70 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A termasuk di dalamnya, tetapi B tidak.<br>(d) C(8, 4) = 70 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga B termasuk di dalamnya, tetapi A tidak.<br>(e) C(8, 3) = 56 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A dan B selalu termasuk di dalamnya.</p>
+            <p><strong>Contoh 9.</strong> Di antara 10 orang mahasiswa Teknik Informatika Angkatan 2002, berapa banyak cara membentuk sebuah perwakilan beranggotakan 5 orang sedemikian sehingga:<br>(a) mahasiswa bernama A selalu termasuk di dalamnya;<br>(b) mahasiswa bernama A tidak termasuk di dalamnya;<br>(c) mahasiswa bernama A selalu termasuk di dalamnya, tetapi B tidak;<br>(d) mahasiswa bernama B selalu termasuk di dalamnya, tetapi A tidak;<br>(e) mahasiswa bernama A dan B termasuk di dalamnya;<br>(f) setidaknya salah satu dari mahasiswa yang bernama A atau B termasuk di dalamnya.</p>
+            <p><strong>Penyelesaian:</strong><br>(a) C(9, 4) = 126 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A selalu termasuk di dalamnya.<br>(b) C(9, 5) = 126 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A tidak termasuk di dalamnya.<br>(c) C(8, 4) = 70 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A termasuk di dalamnya, tetapi B tidak.<br>(d) C(8, 4) = 70 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga B termasuk di dalamnya, tetapi A tidak.<br>(e) C(8, 3) = 56 cara untuk membentuk perwakilan yang beranggotakan 5 orang sedemikian sehingga A dan B selalu termasuk di dalamnya.</p>
           </div>
         `
       },
       "informatika": {
-        title: "PENARAPAN DALAM INFORMATIKA",
+        title: "PENERAPAN DALAM INFORMATIKA",
         icon: "fa-laptop-code",
         content: `
           <ol>
@@ -513,10 +513,9 @@
           <div id="contoh-password" class="contoh-box">
             <p><strong>Syarat pembuatan password:</strong> terdiri dari 8 karakter<br>huruf kapital<br>huruf kecil<br>angka</p>
             <p>________________<br>huruf kapital : 26<br>huruf kecil : 26<br>angka : 10</p>
-            <p>62+</p>
-            <p>62.62.62.62.62.62.62.62=62 =<br>198.340.105.584.896</p>
-            <p>8</p>
-            <p>Ada 198.340.105.584.896 cara untuk membuat password</p>
+            <p>Total karakter = 26 + 26 + 10 = 62</p>
+            <p>Jumlah kombinasi = 62⁸ = 218.340.105.584.896</p>
+            <p>Ada 218.340.105.584.896 cara untuk membuat password</p>
           </div>
         `
       }
